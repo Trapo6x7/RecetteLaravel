@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('reviewed_recettes', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('recette_id');
             $table->boolean('reviewed');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
