@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('notes', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('note');
+            $table->string('comment')->nullable();
+            $table->unsignedBigInteger('recette_id');
+            $table->foreign('recette_id')->references('id')->on('recettes')->onDelete('cascade');
             $table->timestamps();
         });
     }

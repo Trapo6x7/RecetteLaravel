@@ -13,8 +13,8 @@ class note extends Model
     ];
 
     public function recette()
-{
-    // Une note appartient à une recette
-    return $this->belongsTo(Recette::class);
-}
+    {
+        // Une note appartient à une recette
+        return $this->belongsTo(Recette::class);
+    }
 }

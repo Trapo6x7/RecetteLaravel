@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('reviewed_recettes', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('recette_id');
+            $table->boolean('reviewed');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('recette_id')->references('id')->on('recettes')->onDelete('cascade');
             $table->timestamps();
         });
     }

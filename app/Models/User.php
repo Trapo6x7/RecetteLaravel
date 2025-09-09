@@ -34,10 +34,9 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-        public function user()
+    public function user()
     {
         // Cette association appartient à un utilisateur
         return $this->hasMany(ReviewedRecette::class);
     }
-
 }

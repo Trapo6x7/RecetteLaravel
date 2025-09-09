@@ -21,8 +21,8 @@ class recette extends Model
 
     public function ingredients()
     {
-   // Relation ManyToMany avec Ingredient via la table recette_ingredient
-    return $this->belongsToMany(Ingredient::class, 'recette_ingredient');
+        // Relation ManyToMany avec Ingredient via la table recette_ingredient
+        return $this->belongsToMany(Ingredient::class, 'recette_ingredient');
     }
 
     public function reviewedRecettes()
