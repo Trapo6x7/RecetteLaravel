@@ -1,24 +1,24 @@
 @extends('layouts.app')
 
 @section('content')
-    <nav class="flex items-center justify-center px-8 py-4 shadow mb-8 rounded-lg">
+    <nav class="flex items-center justify-center px-8 py-2 shadow rounded-lg">
         <a href="{{ route('recettes.random') }}" class="px-4 py-2 text-white">&#8635;</a>
     </nav>
     <div class="flex justify-center items-center min-h-[60vh]">
         <div class="w-full max-w-xl bg-white shadow-lg p-12 border border-gray-200" style="border-radius: 2rem;">
-            <h1 class="text-xl font-bold py-6 text-[#111827] text-center">{{ $recette->name }}</h1>
+            <h1 class="text-xl font-bold py-3 text-[#111827] text-center">{{ $recette->name }}</h1>
             <div class="mb-10 flex flex-col md:flex-row md:justify-between gap-6">
-                <div class="flex-1 p-6 bg-gray-50 border border-gray-200" style="border-radius: 1.5rem;">
+                <div class="flex-1 p-3 bg-gray-50 border border-gray-200" style="border-radius: 1.5rem;">
                     <ul class="space-y-4 text-gray-700 text-center">
-                        <li><span class="font-semibold"> Temps de préparation :</span> {{ $recette->preparation_time }} min
+                        <li><span class="font-semibold"> Preparation time :</span> {{ $recette->preparation_time }} min
                         </li>
-                        <li><span class="font-semibold"> Temps de cuisson :</span> {{ $recette->cooking_time }} min</li>
-                        <li><span class="font-semibold"> Nombre de personnes :</span> {{ $recette->serves }}</li>
+                        <li><span class="font-semibold"> Cooking time :</span> {{ $recette->cooking_time }} min</li>
+                        <li><span class="font-semibold"> Serves :</span> {{ $recette->serves }}</li>
                     </ul>
 
                 </div>
             </div>
-            <h3 class="text-lg font-semibold py-3 text-[#111827] text-center">Ingrédients</h3>
+            <h3 class="text-lg font-semibold py-3 text-[#111827] text-center">Ingredients</h3>
             <ul class="grid grid-cols-2 gap-4 mb-2">
                 @foreach ($recette->ingredients as $ingredient)
                     <li class="bg-gray-100 px-4 py-3 text-gray-800 border border-gray-200 text-center shadow-sm"
@@ -27,12 +27,11 @@
             </ul>
         </div>
     </div>
-    <div class="flex flex-col items-center gap-4">
+    <div class="flex flex-col items-center gap-4 mt-3 mb-3">
         <button onclick="document.getElementById('modalAvis').classList.remove('hidden')"
-            class="px-3 py-2 bg-indigo-600 text-white rounded-xl shadow hover:bg-indigo-700 transition">Donner votre
-            avis</button>
+            class="px-3 py-2 bg-indigo-600 text-white rounded-xl shadow hover:bg-indigo-700 transition">Leave a comment</button>
 
-        <form method="POST" action="{{ route('recettes.reviewed', $recette->id) }}">
+        {{-- <form method="POST" action="{{ route('recettes.reviewed', $recette->id) }}">
             @csrf
             <button type="submit"
                 class="px-6 py-2 text-white rounded-xl shadow">
@@ -44,7 +43,7 @@
             <span class="inline-block mt-2 px-2 py-2 bg-green-100 text-white rounded-full shadow">
                 Cette recette a déjà été réalisée {{ $recette->reviewedRecettes->count() }} fois
             </span>
-        @endif
+        @endif --}}
     </div>
 
     <!-- Modale pour le formulaire d'avis -->
@@ -62,9 +61,9 @@
             </button>
             <form method="POST" action="{{ route('recettes.rate', $recette->id) }}">
                 @csrf
-                <h3 class="text-lg font-semibold mb-4 text-[#111827] text-center">Donner votre avis</h3>
+                <h3 class="text-lg font-semibold mb-4 text-[#111827] text-center">Leave a comment</h3>
                 <div class="mb-4 flex flex-col items-center">
-                    <label for="note" class="block mb-2 font-medium text-[#111827]">Note :</label>
+                    <label for="note" class="block mb-2 font-medium text-[#111827]">Rating :</label>
                     <select name="note" id="note" class="rounded border-gray-300 px-4 py-2">
                         <option value="">Choisir une note</option>
                         @for ($i = 1; $i <= 5; $i++)
@@ -73,26 +72,26 @@
                     </select>
                 </div>
                 <div>
-                    <label for="comment" class="block mb-2 font-medium text-[#111827] text-center">Commentaire :</label>
+                    <label for="comment" class="block mb-2 font-medium text-[#111827] text-center">Comment :</label>
                     <textarea name="comment" id="comment" rows="3" class="w-full rounded border-gray-300 px-4 py-2"
                         placeholder="Votre avis..."></textarea>
                 </div>
                 <div class="flex justify-center py-3">
                     <button type="submit"
-                        class="px-6 py-2 bg-indigo-600 text-[#111827] rounded-xl shadow hover:bg-indigo-700 transition">Envoyer</button>
+                        class="px-6 py-2 bg-indigo-600 text-[#111827] rounded-xl shadow hover:bg-indigo-700 transition">Send</button>
                 </div>
             </form>
         </div>
     </div>
 
     {{-- Affichage des notes et commentaires --}}
-    <div class="flex justify-center items-center mt-8">
+    <div class="flex justify-center items-center">
         <div class="w-full max-w-xl bg-white rounded-2xl shadow p-8 border border-gray-200" style="border-radius: 2rem;">
-            <h3 class="text-lg font-semibold py-6 text-[#111827] text-center">Avis des utilisateurs</h3>
+            <h3 class="text-lg font-semibold py-6 text-[#111827] text-center">Comments :</h3>
             @forelse ($recette->notes as $note)
                 <div class="mb-6 p-4 bg-gray-50 border border-gray-200 rounded-xl">
                     <div class="flex items-center mb-2">
-                        <span class="font-bold text-[#111827]">Note :</span>
+                        <span class="font-bold text-[#111827]">Rating :</span>
                         <span class="ml-2 text-gray-800">{{ $note->note }} / 5</span>
                     </div>
                     @if ($note->comment)
@@ -100,7 +99,7 @@
                     @endif
                 </div>
             @empty
-                <div class="text-gray-500 text-center py-6">Aucun avis pour cette recette.</div>
+                <div class="text-gray-500 text-center py-6">No ratings for this recipe.</div>
             @endforelse
         </div>
     </div>
