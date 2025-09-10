@@ -64,12 +64,27 @@
                 <h3 class="text-lg font-semibold mb-4 text-[#111827] text-center">Leave a comment</h3>
                 <div class="mb-4 flex flex-col items-center">
                     <label for="note" class="block mb-2 font-medium text-[#111827]">Rating :</label>
-                    <select name="note" id="note" class="rounded border-gray-300 px-4 py-2">
-                        <option value="">Choisir une note</option>
+                    <div class="flex gap-2 justify-center">
                         @for ($i = 1; $i <= 5; $i++)
-                            <option value="{{ $i }}">{{ $i }} / 5</option>
+                            <input type="radio" name="note" id="star{{ $i }}" value="{{ $i }}" class="hidden" />
+                            <label for="star{{ $i }}" class="cursor-pointer">
+                                <svg class="w-8 h-8 text-gray-300 star" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 17.75L6.16 21l1.12-6.54L2 9.75l6.58-.96L12 3.5l3.42 5.29 6.58.96-5.28 4.71 1.12 6.54z" />
+                                </svg>
+                            </label>
                         @endfor
-                    </select>
+                    </div>
+                    <script>
+                        document.querySelectorAll('.star').forEach((star, idx, arr) => {
+                            star.parentElement.addEventListener('click', function() {
+                                arr.forEach((s, i) => {
+                                    s.classList.toggle('text-yellow-400', i <= idx);
+                                    s.classList.toggle('text-gray-300', i > idx);
+                                });
+                                document.getElementById('star' + (idx + 1)).checked = true;
+                            });
+                        });
+                    </script>
                 </div>
                 <div>
                     <label for="comment" class="block mb-2 font-medium text-[#111827] text-center">Comment :</label>
@@ -92,7 +107,13 @@
                 <div class="mb-6 p-4 bg-gray-50 border border-gray-200 rounded-xl">
                     <div class="flex items-center mb-2">
                         <span class="font-bold text-[#111827]">Rating :</span>
-                        <span class="ml-2 text-gray-800">{{ $note->note }} / 5</span>
+                        <span class="ml-2 flex gap-1">
+                            @for ($i = 1; $i <= 5; $i++)
+                                <svg class="w-6 h-6 {{ $i <= $note->note ? 'text-yellow-400' : 'text-gray-300' }}" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M12 17.75L6.16 21l1.12-6.54L2 9.75l6.58-.96L12 3.5l3.42 5.29 6.58.96-5.28 4.71 1.12 6.54z" />
+                                </svg>
+                            @endfor
+                        </span>
                     </div>
                     @if ($note->comment)
                         <div class="text-[#111827] italic">"{{ $note->comment }}"</div>
