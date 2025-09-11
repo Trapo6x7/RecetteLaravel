@@ -18,7 +18,6 @@ class AppServiceProvider extends ServiceProvider
     $this->app->bind(\App\Repositories\IngredientRepositoryInterface::class, \App\Repositories\IngredientRepository::class);
     $this->app->bind(\App\Repositories\NoteRepositoryInterface::class, \App\Repositories\NoteRepository::class);
     $this->app->bind(\App\Repositories\ReviewedRecetteRepositoryInterface::class, \App\Repositories\ReviewedRecetteRepository::class);
-    $this->app->bind(\App\Repositories\UserRepositoryInterface::class, \App\Repositories\UserRepository::class);
     }
 
     /**
